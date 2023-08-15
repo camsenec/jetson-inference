@@ -74,7 +74,7 @@ DATA_VOLUME=" \
 
 # parse user arguments
 USER_COMMAND=""
-USER_VOLUME=""
+USER_VOLUME="--volume $PWD/examples:$DOCKER_ROOT/examples"
 DEV_VOLUME=""
 ROS_DISTRO="foxy"
 
@@ -200,7 +200,8 @@ if [ $ARCH = "aarch64" ]; then
 	# /proc or /sys files aren't mountable into docker
 	cat /proc/device-tree/model > /tmp/nv_jetson_model
 
-	sudo docker run --runtime nvidia -it --rm \
+	sudo docker run --runtime nvidia -it \
+        --name jetson_inference \
 		--network host \
 		-v /tmp/argus_socket:/tmp/argus_socket \
 		-v /etc/enctune.conf:/etc/enctune.conf \
@@ -212,7 +213,8 @@ if [ $ARCH = "aarch64" ]; then
 
 elif [ $ARCH = "x86_64" ]; then
 
-	sudo docker run --gpus all -it --rm \
+	sudo docker run --gpus all -it \
+        --name jetson_inference \
 		--network=host \
 		--shm-size=8g \
 		--ulimit memlock=-1 \
