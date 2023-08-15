@@ -1,3 +1,4 @@
+
 #!/bin/bash
 #
 # Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
@@ -252,6 +253,49 @@ function download_peoplenet_v232()
 	tao_to_trt "resnet34_peoplenet_pruned_int8.etlt" "resnet34_peoplenet_pruned_int8.txt"
 }
 
+function download_original_action_recognition()
+{
+	
+  local model_name="original_action_recognition"
+	local model_path="$NETWORK_DIR/$model_name"
+  
+  rm -r $model_path
+	mkdir $model_path
+	cd $model_path
+  
+  download_tao_converter
+
+	download_file "$model_name.etlt" "https://usa-robo.s3.ap-northeast-1.amazonaws.com/action_recognition.etlt"
+	download_file "labels.txt" "https://usa-robo.s3.ap-northeast-1.amazonaws.com/labels.txt"
+	#download_file "colors.txt" "https://nvidia.box.com/shared/static/s5ok5wgf2rn38jhj7zi0x9e8fw0wqnyr.txt"
+
+	local model_input="$model_name.etlt"
+	local model_output="$model_input.engine"
+	local encryption_key="nvidia_tao"
+
+	#local calibration="$2"
+	#local input_dims="3,1280,720"
+	#local output_layers="output_bbox/BiasAdd,output_cov/Sigmoid"
+	#local max_batch_size="1"
+	#local workspace_size="4294967296" # 4GB 
+	
+	./tao-converter $model_input -k $encryption_key -p input_rgb,16x9x224x224,32x9x224x224,32x9x224x224 -e $model_output -t fp16
+
+	local convert_status=$?
+	
+	if [ $convert_status != 0 ]; then
+		echo "$LOG failed to convert model '$model_input' to TensorRT..."
+		exit 1
+	fi
+	
+	if [ ! -f $model_output ]; then
+		echo "$LOG missing output model '$model_output'"
+		exit 1
+	fi
+	
+	echo "$LOG successfully built TensorRT engine '$model_output'"
+}
+
 
 #
 # DashCamNet
@@ -331,6 +375,8 @@ elif [[ "$MODEL" == "trafficcamnet_pruned_v1.0.3" ]]; then
 	download_trafficcamnet_v103
 elif [[ "$MODEL" == "facedetect_pruned_quantized_v2.0.1" ]]; then
 	download_facedetect_v201
+elif [[ "$MODEL" == "original_action_recognition" ]]; then
+	download_original_action_recognition
 else
 	echo "$LOG error -- invalid or unknown model selected ($MODEL)"
 	exit 1

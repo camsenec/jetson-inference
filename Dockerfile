@@ -106,6 +106,7 @@ COPY data/networks/models.json data/networks/models.json
 
 COPY CMakeLists.txt CMakeLists.txt
 COPY CMakePreBuild.sh CMakePreBuild.sh
+COPY setup_workspace.sh setup_workspace.sh
 
 
 #
@@ -131,6 +132,8 @@ RUN cd examples/my-recognition && \
     cd build && \
     cmake ../ && \
     make
+
+RUN apt update && apt install --no-install-recommends -y vim
 
 RUN cp -r resources/.vscode .vscode
 
