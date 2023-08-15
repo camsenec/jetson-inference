@@ -26,6 +26,7 @@ if [ $ARCH = "aarch64" ]; then
 		elif [ $L4T_REVISION_MAJOR -eq 7 ]; then
 			# L4T R32.7.x all run the R32.7.0 container
 			CONTAINER_TAG="r32.7.1"
+      L4T_VERSION="32.7.1"
 		fi
 	elif [ $L4T_RELEASE -eq 35 ]; then
 		if [ $L4T_REVISION_MAJOR -gt 3 ]; then

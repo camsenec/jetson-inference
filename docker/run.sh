@@ -76,7 +76,7 @@ DATA_VOLUME=" \
 USER_COMMAND=""
 USER_VOLUME=""
 DEV_VOLUME=""
-ROS_DISTRO=""
+ROS_DISTRO="foxy"
 
 while :; do
     case $1 in

@@ -77,7 +77,7 @@ COPY python/training/detection/ssd/requirements.txt /tmp/pytorch_ssd_requirement
 COPY python/www/flask/requirements.txt /tmp/flask_requirements.txt
 COPY python/www/dash/requirements.txt /tmp/dash_requirements.txt
 
-RUN pip3 install --no-cache-dir --verbose --upgrade Cython && \
+RUN pip3 install --no-cache-dir --verbose Cython==0.29.36 && \
     pip3 install --no-cache-dir --verbose -r /tmp/pytorch_ssd_requirements.txt && \
     pip3 install --no-cache-dir --verbose -r /tmp/flask_requirements.txt && \
     pip3 install --no-cache-dir --verbose -r /tmp/dash_requirements.txt
@@ -132,4 +132,4 @@ RUN cd examples/my-recognition && \
     make
 
 # workaround for "cannot allocate memory in static TLS block"
-ENV LD_PRELOAD=${LD_PRELOAD}:/usr/lib/aarch64-linux-gnu/libgomp.so.1:/lib/aarch64-linux-gnu/libGLdispatch.so.0
+#ENV LD_PRELOAD=${LD_PRELOAD}:/usr/lib/aarch64-linux-gnu/libgomp.so.1:/lib/aarch64-linux-gnu/libGLdispatch.so.0

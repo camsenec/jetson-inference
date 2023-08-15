@@ -11,6 +11,8 @@
 #
 
 BASE_IMAGE=$1
+ARCH=${2:-"aarch64"}
+ROS_DISTRO=${3:-"foxy"}
 
 # find L4T_VERSION
 source docker/tag.sh
