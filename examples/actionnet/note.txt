@@ -1,0 +1,1 @@
+./actionnet --network original --input "csi://0" --input-flip=rotate-180 --output="display://0"
