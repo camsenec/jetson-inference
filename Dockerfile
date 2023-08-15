@@ -101,6 +101,7 @@ COPY examples examples
 COPY python python
 COPY tools tools
 COPY utils utils
+COPY resources resources
 COPY data/networks/models.json data/networks/models.json
 
 COPY CMakeLists.txt CMakeLists.txt
@@ -130,6 +131,8 @@ RUN cd examples/my-recognition && \
     cd build && \
     cmake ../ && \
     make
+
+RUN cp -r resources/.vscode .vscode
 
 # workaround for "cannot allocate memory in static TLS block"
 #ENV LD_PRELOAD=${LD_PRELOAD}:/usr/lib/aarch64-linux-gnu/libgomp.so.1:/lib/aarch64-linux-gnu/libGLdispatch.so.0
