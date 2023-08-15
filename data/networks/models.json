@@ -509,6 +509,15 @@
             "input": "0",
             "output": "350",
             "description": "ResNet-34 trained on 1040-class Kinetics-700 and Moments-In-Time dataset"
+        },
+
+        "original_aciton_recognition": {
+            "alias": ["original_actionnet", "original"],
+            "cmd": "tao-model-downloader.sh original_action_recognition",
+            "dir": "original_action_recognition",
+            "model": "original_action_recognition.etlt.engine",
+            "labels": "labels.txt",
+            "description": "Original action recognition net to recognize actions by children which could lead to break robots"
         }
     },
     
