@@ -74,8 +74,8 @@ DATA_VOLUME=" \
 
 # parse user arguments
 USER_COMMAND=""
-USER_VOLUME="\
-  --volume $PWD/examples:$DOCKER_ROOT/examples"
+USER_VOLUME="--volume $PWD/examples:$DOCKER_ROOT/examples --volume $PWD/c:$DOCKER_ROOT/c "
+
 
 DEV_VOLUME=""
 ROS_DISTRO="foxy"

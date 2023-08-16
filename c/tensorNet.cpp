@@ -931,6 +931,16 @@ bool tensorNet::ConfigureBuilder( nvinfer1::IBuilder* builder, nvinfer1::IBuilde
 
 	if( allowGPUFallback )
 		config->setFlag(nvinfer1::BuilderFlag::kGPU_FALLBACK);
+	
+	auto profile = builder->createOptimizationProfile();
+    // This profile will be valid for all images whose size falls in the range of [(1, 1, 1, 1), (1, 1, 56, 56)]
+    // but TensorRT will optimize for (1, 1, 28, 28)
+    // We do not need to check the return of setDimension and addOptimizationProfile here as all dims are explicitly set
+    
+	profile->setDimensions("input_rgb", nvinfer1::OptProfileSelector::kMIN, nvinfer1::Dims4{1, 9, 224, 224});
+    profile->setDimensions("input_rgb", nvinfer1::OptProfileSelector::kOPT, nvinfer1::Dims4{1, 9, 224, 224});
+    profile->setDimensions("input_rgb", nvinfer1::OptProfileSelector::kMAX, nvinfer1::Dims4{1, 9, 224, 224});
+    config->addOptimizationProfile(profile);
 
 	LogInfo(LOG_TRT "device %s, building FP16:  %s\n", deviceTypeToStr(device), isFp16Enabled(config) ? "ON" : "OFF"); 
 	LogInfo(LOG_TRT "device %s, building INT8:  %s\n", deviceTypeToStr(device), isInt8Enabled(config) ? "ON" : "OFF"); 
@@ -1464,6 +1474,7 @@ bool tensorNet::LoadEngine( nvinfer1::ICudaEngine* engine,
 		nvinfer1::Dims inputDims = validateDims(engine->getBindingDimensions(inputIndex));
 
 	#if NV_TENSORRT_MAJOR >= 7
+		inputDims = shiftDims(inputDims);   // change NCHW to CHW if EXPLICIT_BATCH set
 	    if( mModelType == MODEL_ONNX )
 		   inputDims = shiftDims(inputDims);   // change NCHW to CHW if EXPLICIT_BATCH set
 	#endif
@@ -1528,6 +1539,7 @@ bool tensorNet::LoadEngine( nvinfer1::ICudaEngine* engine,
 		nvinfer1::Dims outputDims = validateDims(engine->getBindingDimensions(outputIndex));
 
 	#if NV_TENSORRT_MAJOR >= 7
+		outputDims = shiftDims(outputDims);  // change NCHW to CHW if EXPLICIT_BATCH set
 		if( mModelType == MODEL_ONNX )
 			outputDims = shiftDims(outputDims);  // change NCHW to CHW if EXPLICIT_BATCH set
 	#endif
