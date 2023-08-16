@@ -3,4 +3,4 @@
 ./tao-converter $model_input -k $encryption_key -d 3,224,224 -p input_rgb,1x9x224x224,16x9x224x224,32x9x224x224 -e $model_output -t fp16
 
 ./tao-converter $model_input -k $encryption_key -d 3,224,224 -p input_rgb,4x9x224x224,4x9x224x224,4x9x224x224 -m 1 -e $model_output -t fp16
-     #./tao-converter $model_input -k $encryption_key -d 3,224,224 -e $model_output -t fp16 
+#./tao-converter $model_input -k $encryption_key -d 3,224,224 -e $model_output -t fp16 

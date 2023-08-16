@@ -520,7 +520,7 @@
             "description": "Original ResNet-18 trained on 1040-class Kinetics-700 and Moments-In-Time dataset"
         },
         
-	"resnet-original-3d": {
+        "resnet-original-3d": {
             "dir": "Action-Resnet18-Original",
             "model": "resnet18_3d_rgb_hmdb5_32.etlt.engine",
             "labels": "labels.txt",
@@ -535,10 +535,23 @@
             "dir": "original_action_recognition",
             "model": "original_action_recognition.etlt.engine",
             "labels": "labels.txt",
-	    "input": "input_rgb",
-	    "output": "fc_pred",
+            "input": "input_rgb",
+            "output": "fc_pred",
             "description": "Original action recognition net to recognize actions by children which could lead to break robots"
+        },
+
+         "original-5.0": {
+            "alias": ["original_actionnet-5.0", "original_action_recognition-5.0"],
+            "url": "https://usa-robo.s3.ap-northeast-1.amazonaws.com/Original-ActionNet-5.0.tar.gz",
+            "tar": "Original-ActionNet-5.0.tar.gz",
+            "dir": "Original-ActionNet-5.0",
+            "model": "original_action_recognition.onnx",
+            "labels": "labels.txt",
+            "input": "input_rgb",
+            "output": "fc_pred",
+            "description": "Original action recognition net made by tao-toolkit 5.0.0 to recognize actions by children which could lead to break robots"
         }
+        
     },
     
     "background": {
