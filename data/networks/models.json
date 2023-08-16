@@ -510,6 +510,24 @@
             "output": "350",
             "description": "ResNet-34 trained on 1040-class Kinetics-700 and Moments-In-Time dataset"
         },
+        
+        "resnet-original": {
+            "dir": "Action-Resnet18-Original",
+            "model": "resnet18_2d_rgb_hmdb5_32.etlt.engine",
+            "labels": "labels.txt",
+            "input": "input_rgb",
+            "output": "fc_pred",
+            "description": "Original ResNet-18 trained on 1040-class Kinetics-700 and Moments-In-Time dataset"
+        },
+        
+	"resnet-original-3d": {
+            "dir": "Action-Resnet18-Original",
+            "model": "resnet18_3d_rgb_hmdb5_32.etlt.engine",
+            "labels": "labels.txt",
+            "input": "input_rgb",
+            "output": "fc_pred",
+            "description": "Original ResNet-18 3d trained on 1040-class Kinetics-700 and Moments-In-Time dataset"
+        },
 
         "original_action_recognition": {
             "alias": ["original_actionnet", "original"],

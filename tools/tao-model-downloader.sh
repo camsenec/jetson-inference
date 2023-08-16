@@ -256,14 +256,14 @@ function download_peoplenet_v232()
 function download_original_action_recognition()
 {
 	
-  local model_name="original_action_recognition"
+	local model_name="original_action_recognition"
 	local model_path="$NETWORK_DIR/$model_name"
   
-  rm -r $model_path
+	rm -r $model_path
 	mkdir $model_path
 	cd $model_path
   
-  download_tao_converter
+	download_tao_converter
 
 	download_file "$model_name.etlt" "https://usa-robo.s3.ap-northeast-1.amazonaws.com/action_recognition.etlt"
 	download_file "labels.txt" "https://usa-robo.s3.ap-northeast-1.amazonaws.com/labels.txt"
