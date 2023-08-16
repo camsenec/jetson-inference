@@ -198,9 +198,9 @@ bool actionNet::init(const char* model_path, const char* class_path,
 	CUDA(cudaMemset(mInputBuffers[1], 0, mInputs[0].size));
 
 	// load classnames
-	mInputs[0].dims.d[1] = mInputs[0].dims.d[0];
-	mInputs[0].dims.d[2] = mInputs[0].dims.d[1];
 	mInputs[0].dims.d[3] = mInputs[0].dims.d[2];
+	mInputs[0].dims.d[2] = mInputs[0].dims.d[1];
+	mInputs[0].dims.d[1] = mInputs[0].dims.d[0];
 	mInputs[0].dims.d[0] = maxBatchSize;
 	
 	mNumFrames = mInputs[0].dims.d[1];
