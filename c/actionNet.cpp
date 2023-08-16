@@ -198,6 +198,11 @@ bool actionNet::init(const char* model_path, const char* class_path,
 	CUDA(cudaMemset(mInputBuffers[1], 0, mInputs[0].size));
 
 	// load classnames
+	mInputs[0].dims.d[2] = mInputs[0].dims.d[0];
+	mInputs[0].dims.d[3] = mInputs[0].dims.d[1];
+	mInputs[0].dims.d[0] = maxBatchSize;
+	mInputs[0].dims.d[1] = 9;
+	
 	mNumFrames = mInputs[0].dims.d[1];
 	mNumClasses = mOutputs[0].dims.d[0];
 
@@ -218,8 +223,14 @@ bool actionNet::preProcess( void* image, uint32_t width, uint32_t height, imageF
 	PROFILER_BEGIN(PROFILER_PREPROCESS);
 
 	// input tensor dims are:  3x16x112x112 (CxNxHxW)
+	LogInfo("mInputs[0].dims.d[0] %i\n", mInputs[0].dims.d[0]);
+	LogInfo("mInputs[0].dims.d[1] %i\n", mInputs[0].dims.d[1]);
+	LogInfo("mInputs[0].dims.d[2] %i\n", mInputs[0].dims.d[2]);
+	LogInfo("mInputs[0].dims.d[3] %i\n", mInputs[0].dims.d[3]);
 	const size_t inputFrameSize = mInputs[0].dims.d[2] * mInputs[0].dims.d[3];
-	const size_t inputBatchSize = mInputs[0].dims.d[1] * inputFrameSize;
+	const size_t inputBatchSize = mInputs[0].dims.d[0] * inputFrameSize;
+	
+	LogInfo("inputFrameSize: %u, inputBatchSize: %u", inputFrameSize, inputBatchSize);
 	
 	const uint32_t previousInputBuffer = (mCurrentInputBuffer + 1) % 2;
 
