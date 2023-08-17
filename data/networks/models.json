@@ -550,7 +550,19 @@
             "input": "input_rgb",
             "output": "fc_pred",
             "description": "Original action recognition net made by tao-toolkit 5.0.0 to recognize actions by children which could lead to break robots"
+        },
+         
+	"original-5.0-512": {
+            "url": "https://usa-robo.s3.ap-northeast-1.amazonaws.com/Original-ActionNet-5.0-v2.tar.gz",
+            "tar": "Original-ActionNet-5.0-v2.tar.gz",
+            "dir": "Original-ActionNet-5.0-v2",
+            "model": "original_action_recognition_v2.onnx",
+            "labels": "labels.txt",
+            "input": "input_rgb",
+            "output": "fc_pred",
+            "description": "Original action recognition net made by tao-toolkit 5.0.0 to recognize actions by children which could lead to break robots"
         }
+        
         
     },
     

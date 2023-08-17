@@ -205,6 +205,9 @@ bool actionNet::init(const char* model_path, const char* class_path,
 	
 	mNumFrames = mInputs[0].dims.d[1];
 	mNumClasses = mOutputs[0].dims.d[0];
+	
+	LogInfo("mOutputs[0].dims.d[0] %i\n", mOutputs[0].dims.d[0]);
+	LogInfo("mOutputs[0].dims.d[1] %i\n", mOutputs[0].dims.d[1]);
 
 	if( !LoadClassLabels(class_path, mClassDesc, mNumClasses) || mClassDesc.size() != mNumClasses )
 	{
@@ -222,7 +225,7 @@ bool actionNet::preProcess( void* image, uint32_t width, uint32_t height, imageF
 {
 	PROFILER_BEGIN(PROFILER_PREPROCESS);
 
-	// input tensor dims are:  3x16x112x112 (CxNxHxW)
+	// input tensor dims are:  3x16x112x112 (CxNxHxW) -> N, C, H, W
 	LogInfo("mInputs[0].dims.d[0] %i\n", mInputs[0].dims.d[0]);
 	LogInfo("mInputs[0].dims.d[1] %i\n", mInputs[0].dims.d[1]);
 	LogInfo("mInputs[0].dims.d[2] %i\n", mInputs[0].dims.d[2]);
@@ -312,9 +315,9 @@ int actionNet::Classify( void* image, uint32_t width, uint32_t height, imageForm
 	{
 		LogError(LOG_TRT "actionNet::Classify() -- unsupported image format (%s)\n", imageFormatToStr(format));
 		LogError(LOG_TRT "                        supported formats are:\n");
-		LogError(LOG_TRT "                           * rgb8\n");		
-		LogError(LOG_TRT "                           * rgba8\n");		
-		LogError(LOG_TRT "                           * rgb32f\n");		
+		LogError(LOG_TRT "                           * rgb8\n");	
+		LogError(LOG_TRT "                           * rgba8\n");	
+		LogError(LOG_TRT "                           * rgb32f\n");	
 		LogError(LOG_TRT "                           * rgba32f\n");
 
 		return false;

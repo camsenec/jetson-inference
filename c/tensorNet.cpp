@@ -937,9 +937,9 @@ bool tensorNet::ConfigureBuilder( nvinfer1::IBuilder* builder, nvinfer1::IBuilde
     // but TensorRT will optimize for (1, 1, 28, 28)
     // We do not need to check the return of setDimension and addOptimizationProfile here as all dims are explicitly set
     
-	profile->setDimensions("input_rgb", nvinfer1::OptProfileSelector::kMIN, nvinfer1::Dims4{16, 9, 224, 224});
-    profile->setDimensions("input_rgb", nvinfer1::OptProfileSelector::kOPT, nvinfer1::Dims4{16, 9, 224, 224});
-    profile->setDimensions("input_rgb", nvinfer1::OptProfileSelector::kMAX, nvinfer1::Dims4{16, 9, 224, 224});
+	profile->setDimensions("input_rgb", nvinfer1::OptProfileSelector::kMIN, nvinfer1::Dims4{1, 9, 224, 224});
+    profile->setDimensions("input_rgb", nvinfer1::OptProfileSelector::kOPT, nvinfer1::Dims4{1, 9, 224, 224});
+    profile->setDimensions("input_rgb", nvinfer1::OptProfileSelector::kMAX, nvinfer1::Dims4{1, 9, 224, 224});
     config->addOptimizationProfile(profile);
 
 	LogInfo(LOG_TRT "device %s, building FP16:  %s\n", deviceTypeToStr(device), isFp16Enabled(config) ? "ON" : "OFF"); 
